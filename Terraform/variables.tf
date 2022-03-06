@@ -4,7 +4,7 @@ locals {
 
 variable "project" {
   description = "Your GCP Project ID"
-  # default = "learn-data-eng" 
+  default = "learn-data-eng" 
 }
 
 variable "region" {

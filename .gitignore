@@ -6,3 +6,5 @@ ny_taxi_postgres_data/
 *.tfstate.backup
 *.hcl
 *.log
+*.exe
+scheduler

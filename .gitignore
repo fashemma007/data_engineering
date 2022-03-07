@@ -2,3 +2,7 @@
 *.swp
 ny_taxi_postgres_data/
 /.ipynb_checkpoints/
+*.tfstate
+*.tfstate.backup
+*.hcl
+*.log

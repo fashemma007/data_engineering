@@ -8,3 +8,4 @@ ny_taxi_postgres_data/
 *.log
 *.exe
 scheduler
+*.json

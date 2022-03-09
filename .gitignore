@@ -9,3 +9,4 @@ ny_taxi_postgres_data/
 *.exe
 scheduler
 *.json
+/.google

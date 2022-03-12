@@ -5,7 +5,7 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-
+from pathlib import Path
 from google.cloud import storage
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator
 import pyarrow.csv as pv
@@ -18,6 +18,7 @@ dataset_file = "yellow_tripdata_2021-01.csv"
 dataset_url = f"https://s3.amazonaws.com/nyc-tlc/trip+data/{dataset_file}"
 path_to_local_home = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
 parquet_file = dataset_file.replace('.csv', '.parquet')
+file_name = Path(f"{path_to_local_home}/{dataset_file}")
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'all_trips_data')
 
 
@@ -67,11 +68,10 @@ with DAG(
     max_active_runs=1,
     tags=['dtc-de'],
 ) as dag:
-
     download_dataset_task = BashOperator(
         task_id="download_dataset_task",
         bash_command=f"curl -sSL {dataset_url} > {path_to_local_home}/{dataset_file}"
-    )
+        )
 
     format_to_parquet_task = PythonOperator(
         task_id="format_to_parquet_task",
@@ -106,5 +106,4 @@ with DAG(
             },
         },
     )
-
     download_dataset_task >> format_to_parquet_task >> local_to_gcs_task >> bigquery_external_table_task

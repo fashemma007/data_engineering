@@ -23,6 +23,9 @@ BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'all_trips_data')
 
 
 def format_to_parquet(src_file):
+    """
+    `Function which Converts csv to parquet`
+    """
     if not src_file.endswith('.csv'):
         logging.error("Can only accept source files in CSV format, for the moment")
         return
@@ -33,6 +36,8 @@ def format_to_parquet(src_file):
 # NOTE: takes 20 mins, at an upload speed of 800kbps. Faster if your internet has a better upload speed
 def upload_to_gcs(bucket, object_name, local_file):
     """
+    `Function which uploads parquet files to GCS bucket`
+    
     Ref: https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python
     :param bucket: GCS bucket name
     :param object_name: target path & file-name

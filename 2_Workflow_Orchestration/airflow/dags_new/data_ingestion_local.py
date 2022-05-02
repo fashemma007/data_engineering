@@ -16,7 +16,7 @@ OUTPUT_FILE = AIRFLOW_HOME+'/nyc_tripdata_{{execution_date.strftime(\'%Y-%m\')}}
 #Declaring the DAG object
 local_workflow = DAG(
    "Local_ingestion", #DAG name 
-   schedule_interval="0 6 * * *",#6am daily
+   schedule_interval="0 6 * * 1",#6am on Mondays
    start_date=datetime(2022,5,1) #DAG start date
    )
 

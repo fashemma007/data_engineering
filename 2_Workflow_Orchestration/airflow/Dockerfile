@@ -10,6 +10,9 @@ RUN apt-get update -qq && apt-get install vim -qqq
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip install --no-cache-dir pandas sqlalchemy psycopg2-binary
+
+#===--no-cache-dir means cached data shldn't be saved to avoid bulky image===
 
 # Ref: https://airflow.apache.org/docs/docker-stack/recipes.html
 
@@ -36,8 +39,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 #     && gcloud --version
 
 WORKDIR $AIRFLOW_HOME
-
+COPY output.csv $AIRFLOW_HOME+/nyc_tripdata_2022-05.csv
 COPY scripts scripts
+
 RUN chmod +x scripts
 
 USER $AIRFLOW_UID

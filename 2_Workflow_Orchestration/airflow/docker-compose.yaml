@@ -65,6 +65,11 @@ x-airflow-common:
     # TODO: Please change GCP_PROJECT_ID & GCP_GCS_BUCKET, as per your config
     GCP_PROJECT_ID: 'learn-data-eng'
     GCP_GCS_BUCKET: 'de_data_lake_learn-data-eng'
+    PG_HOST: '${PG_HOST}'
+    PG_USER: '${PG_USER}'
+    PG_PASSWORD: '${PG_PASSWORD}'
+    PG_PORT: '${PG_PORT}'
+    PG_DATABASE: '${PG_DATABASE}'
   volumes:
     # - ./dags:/opt/airflow/dags ##Uncomment code for GCS data ingestion
     - ./dags_new:/opt/airflow/dags

@@ -1,4 +1,4 @@
-##Connecting Docker and PgAdmin (Week 1)
+# #Connecting Docker and PgAdmin (Week 1)
 # services:
 #   pgdatabase:
 #     image: postgres:13
@@ -19,7 +19,7 @@
 #     ports:
 #       - "8080:80"
 #_______________________________________________________________________________________________________________________
-##Connecting Docker and Airflow (Week 2)
+#Connecting Docker and Airflow (Week 2)
 services:
   pgdatabase:
     image: postgres:13
@@ -33,15 +33,7 @@ services:
     ports:
       - "5431:5432"
     networks:
-      - airflow
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=emiwest@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=password
-    ports:
-      - "8080:80"
-      
+      - airflow      
   
 networks:
   airflow:

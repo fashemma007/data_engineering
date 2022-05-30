@@ -9,8 +9,11 @@ import pyarrow.csv as pv
 import pyarrow.parquet as pq
 
 def format_to_csv(src_file,output_csv):
-  df = pd.read_parquet(src_file)
-  df.to_csv(output_csv)
+    try:
+        df = pd.read_parquet(src_file)
+        df.to_csv(output_csv)
+    except Exception:
+        pass
 
 
 def ingest_callable(user, password, host, port, db, table_name, csv_file, execution_date):

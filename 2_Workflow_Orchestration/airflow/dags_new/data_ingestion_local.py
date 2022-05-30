@@ -60,9 +60,9 @@ def local_dag_tasks(dag,url_template,local_parquet_path,local_csv_path,table_nam
 # Yellow Trip Data
 URL_PREFIX = "https://s3.amazonaws.com/nyc-tlc/trip+data/"
 YELLOW_URL_TEMPLATE = URL_PREFIX+"yellow_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.parquet"
-YELLOW_OUTPUT_FILE = AIRFLOW_HOME+'/yellow_tripdata/{{execution_date.strftime(\'%Y\')}}/yellow_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.parquet'
+YELLOW_OUTPUT_FILE = AIRFLOW_HOME+'/yellow_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.parquet'
 YELLOW_TABLE_NAME = "yellow_taxi_{{execution_date.strftime(\'%Y_%m\')}}"
-YELLOW_OUTPUT_CSV = AIRFLOW_HOME+'/yellow_tripdata/{{execution_date.strftime(\'%Y\')}}/yellow_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.csv'
+YELLOW_OUTPUT_CSV = AIRFLOW_HOME+'/yellow_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.csv'
 
 yellow_taxi_dag = DAG(
       dag_id="yellow_taxi_local_ingestion", #DAG name 
@@ -79,14 +79,15 @@ local_dag_tasks(
    url_template=YELLOW_URL_TEMPLATE,
    local_parquet_path=YELLOW_OUTPUT_FILE,
    local_csv_path=YELLOW_OUTPUT_CSV,
-   table_name=YELLOW_TABLE_NAME
+   table_name=YELLOW_TABLE_NAME,
    )
 #=======================================================================================================================
-# For Hire Vehicle Data
-FHV_URL_TEMPLATE = URL_PREFIX+"fhv_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.parquet"
-FHV_OUTPUT_FILE = AIRFLOW_HOME+'/fhv_tripdata_/{{execution_date.strftime(\'%Y\')}}/fhv_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.parquet'
+# For Hire Vehicle Data fhv_tripdata_2019-02.parquet
+URL_PREFIX2="https://nyc-tlc.s3.amazonaws.com/trip+data/"
+FHV_URL_TEMPLATE = URL_PREFIX2+"fhv_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.parquet"
+FHV_OUTPUT_FILE = AIRFLOW_HOME+'/fhv_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.parquet'
 FHV_TABLE_NAME = "fhv_tripdata_{{execution_date.strftime(\'%Y_%m\')}}"
-FHV_OUTPUT_CSV = AIRFLOW_HOME+'/fhv_tripdata_/{{execution_date.strftime(\'%Y\')}}/fhv_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.csv'
+FHV_OUTPUT_CSV = AIRFLOW_HOME+'/fhv_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.csv'
 
 for_hire_vehicles_dag = DAG(
       dag_id="fhv_local_ingestion", #DAG name 
@@ -103,7 +104,7 @@ local_dag_tasks(
    url_template=FHV_URL_TEMPLATE,
    local_parquet_path=FHV_OUTPUT_FILE,
    local_csv_path=FHV_OUTPUT_CSV,
-   table_name=FHV_TABLE_NAME
+   table_name=FHV_TABLE_NAME,
 )
 
 #=======================================================================================================================
@@ -113,19 +114,19 @@ ZONES_PARQUET_FILE_TEMPLATE = AIRFLOW_HOME + '/taxi_zone_lookup.parquet'
 ZONES_CSV_FILE_TEMPLATE = AIRFLOW_HOME + '/taxi_zone_lookup.csv'
 ZONES_TABLE_NAME="zone_lookup"
 
-zones_data_dag = DAG(
-   dag_id="zones_data",
-   schedule_interval="@once",
-   start_date=days_ago(1),
-   catchup=True,
-   max_active_runs=3,
-   tags=['dtc-de'],
-)
+# zones_data_dag = DAG(
+#    dag_id="zones_data",
+#    schedule_interval="@once",
+#    start_date=days_ago(1),
+#    catchup=True,
+#    max_active_runs=3,
+#    tags=['dtc-de'],
+# )
 
-local_dag_tasks(
-   dag=zones_data_dag,
-   url_template=ZONES_URL_TEMPLATE,
-   local_parquet_path=ZONES_PARQUET_FILE_TEMPLATE,
-   local_csv_path=ZONES_CSV_FILE_TEMPLATE,
-   table_name=ZONES_TABLE_NAME
-   )
+# local_dag_tasks(
+#    dag=zones_data_dag,
+#    url_template=ZONES_URL_TEMPLATE,
+#    local_parquet_path=ZONES_PARQUET_FILE_TEMPLATE,
+#    local_csv_path=ZONES_CSV_FILE_TEMPLATE,
+#    table_name=ZONES_TABLE_NAME
+#    )

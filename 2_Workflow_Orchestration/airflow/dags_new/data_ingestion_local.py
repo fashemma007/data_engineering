@@ -110,23 +110,23 @@ local_dag_tasks(
 #=======================================================================================================================
 #Zones
 ZONES_URL_TEMPLATE = 'https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv'
-ZONES_PARQUET_FILE_TEMPLATE = AIRFLOW_HOME + '/taxi_zone_lookup.parquet'
-ZONES_CSV_FILE_TEMPLATE = AIRFLOW_HOME + '/taxi_zone_lookup.csv'
+# ZONES_PARQUET_FILE_TEMPLATE = AIRFLOW_HOME + '/taxi_zone_lookup.parquet'
+ZONES_CSV_FILE_TEMPLATE = AIRFLOW_HOME + '/taxi+_zone_lookup.csv'
 ZONES_TABLE_NAME="zone_lookup"
 
-# zones_data_dag = DAG(
-#    dag_id="zones_data",
-#    schedule_interval="@once",
-#    start_date=days_ago(1),
-#    catchup=True,
-#    max_active_runs=3,
-#    tags=['dtc-de'],
-# )
+zones_data_dag = DAG(
+   dag_id="zones_data",
+   schedule_interval="@once",
+   start_date=days_ago(1),
+   catchup=True,
+   max_active_runs=3,
+   tags=['dtc-de'],
+)
 
-# local_dag_tasks(
-#    dag=zones_data_dag,
-#    url_template=ZONES_URL_TEMPLATE,
-#    local_parquet_path=ZONES_PARQUET_FILE_TEMPLATE,
-#    local_csv_path=ZONES_CSV_FILE_TEMPLATE,
-#    table_name=ZONES_TABLE_NAME
-#    )
+local_dag_tasks(
+   dag=zones_data_dag,
+   url_template=ZONES_URL_TEMPLATE,
+   local_parquet_path=ZONES_CSV_FILE_TEMPLATE,
+   local_csv_path=ZONES_CSV_FILE_TEMPLATE,
+   table_name=ZONES_TABLE_NAME
+   )
